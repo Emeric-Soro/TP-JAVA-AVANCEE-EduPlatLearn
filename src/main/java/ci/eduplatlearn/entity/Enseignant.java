@@ -2,6 +2,7 @@ package ci.eduplatlearn.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -24,10 +25,10 @@ public class Enseignant {
     private String bio;
 
     @Column(nullable = false, updatable = false)
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     @Column(nullable = false, updatable = false)
-    private String updatedAt;
+    private LocalDateTime updatedAt;
 
     // Relaition enseignant <--> cours (1-N) (propriétaire)
     @ManyToMany
@@ -63,11 +64,11 @@ public class Enseignant {
         return bio;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public String getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
@@ -91,11 +92,11 @@ public class Enseignant {
         this.bio = bio;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
