@@ -1,0 +1,21 @@
+app:
+  seed:
+    enabled: true
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/eduplatlearn?createDatabaseIfNotExist=true
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update   # create-drop uniquement pour tests temporaires
+    show-sql: false
+    properties:
+      hibernate.format_sql: true
+    open-in-view: false
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
