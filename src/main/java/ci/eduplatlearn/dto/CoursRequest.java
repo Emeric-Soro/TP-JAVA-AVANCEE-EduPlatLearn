@@ -1,4 +1,9 @@
 package ci.eduplatlearn.dto;
 
-public class CoursRequest {
+public record CoursRequest(
+        String titre,
+        String description,
+        String niveau,
+        boolean publie
+) {
 }

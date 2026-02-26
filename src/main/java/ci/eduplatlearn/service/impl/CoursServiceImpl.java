@@ -4,13 +4,15 @@ import ci.eduplatlearn.api.exception.ResourceNotFoundException;
 import ci.eduplatlearn.dto.cours.CoursCreateRequestDTO;
 import ci.eduplatlearn.dto.cours.CoursResponseDTO;
 import ci.eduplatlearn.dto.cours.CoursUpdateRequestDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import ci.eduplatlearn.entity.Cours;
 import ci.eduplatlearn.repository.CoursRepository;
 import ci.eduplatlearn.service.CoursService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+
 
 @Service
 public class CoursServiceImpl implements CoursService {
@@ -23,11 +25,9 @@ public class CoursServiceImpl implements CoursService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<CoursResponseDTO> getAll() {
-        return coursRepository.findAll()
-                .stream()
-                .map(this::toResponse)
-                .toList();
+    public Page<CoursResponseDTO> getAll(Pageable pageable) {
+        return coursRepository.findAll(pageable)
+                .map(this::toResponse);
     }
 
     private Cours toView(Cours cours) {
