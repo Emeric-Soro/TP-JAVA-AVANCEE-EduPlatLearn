@@ -1,27 +1,30 @@
 package ci.eduplatlearn.api.controller;
 
+import ci.eduplatlearn.dto.Enseignant.EnseignantResponseDTO;
 import ci.eduplatlearn.dto.cours.CoursCreateRequestDTO;
 import ci.eduplatlearn.dto.cours.CoursResponseDTO;
 import ci.eduplatlearn.dto.cours.CoursUpdateRequestDTO;
 import ci.eduplatlearn.service.CoursService;
+import ci.eduplatlearn.service.EnseignantService;
 import org.springframework.data.domain.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping(value = "/api/cours")
 public class CoursController {
     private final CoursService coursService;
+    private final EnseignantService enseignantService;
 
-    public CoursController(CoursService coursService) {
+    public CoursController(CoursService coursService, EnseignantService enseignantService) {
         this.coursService = coursService;
+        this.enseignantService = enseignantService;
     }
 
     @Operation(
@@ -33,7 +36,7 @@ public class CoursController {
             @ApiResponse(responseCode = "400", description = "Paramètres invalides")
     })
     @GetMapping
-    public Page<CoursResponseDTO> getAll(Pageable pageable) {
+    public Page<CoursResponseDTO> getAll(@ParameterObject Pageable pageable) {
         return coursService.getAll(pageable);
     }
 
@@ -74,7 +77,7 @@ public class CoursController {
             @ApiResponse(responseCode = "404", description = "Cours non trouvé")
     })
     @PutMapping("/{id}")
-    public CoursResponseDTO update(@Valid @PathVariable Long id, @RequestBody CoursUpdateRequestDTO request) {
+    public CoursResponseDTO update(@PathVariable Long id, @Valid @RequestBody CoursUpdateRequestDTO request) {
         return coursService.update(id, request);
     }
 
@@ -90,6 +93,19 @@ public class CoursController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         coursService.delete(id);
+    }
+
+    @Operation(
+            summary = "Lister les enseignants d'un cours",
+            description = "Retourne la liste paginée des enseignants associés à un cours spécifique"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Liste des enseignants du cours"),
+            @ApiResponse(responseCode = "404", description = "Cours non trouvé")
+    })
+    @GetMapping("/{coursId}/enseignants")
+    public Page<EnseignantResponseDTO> getEnseignantsByCours(@PathVariable Long coursId, @ParameterObject Pageable pageable) {
+        return enseignantService.getByCoursId(coursId, pageable);
     }
 
 }
