@@ -1,4 +1,8 @@
 package ci.eduplatlearn.dto;
 
-public class EnseignantRequest {
-}
+public record EnseignantRequest(
+        String nom,
+        String prenom,
+        String email,
+        String bio
+) {}

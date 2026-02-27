@@ -9,10 +9,14 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-public interface CoursService  {
+public interface CoursService {
     Page<CoursResponseDTO> getAll(Pageable pageable);
+
     CoursResponseDTO getById(Long id);
+
     CoursResponseDTO create(CoursCreateRequestDTO request);
+
     CoursResponseDTO update(Long id, CoursUpdateRequestDTO request);
+
     void delete(Long id);
 }

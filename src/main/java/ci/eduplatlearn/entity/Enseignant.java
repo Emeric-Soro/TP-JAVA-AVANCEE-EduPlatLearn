@@ -39,13 +39,26 @@ public class Enseignant {
     )
     private java.util.List<Cours> cours = new java.util.ArrayList<>();
 
-    protected Enseignant() {
+    public Enseignant() {
     }
 
-    public Enseignant(String prenom, String nom, String email) {
+    public Enseignant(Long id, String prenom, String nom, String email, String bio) {
+        this.id = id;
         this.prenom = prenom;
         this.nom = nom;
         this.email = email;
+        this.bio = bio;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = this.createdAt;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
     }
 
     public String getNom() {
@@ -102,5 +115,9 @@ public class Enseignant {
 
     public void setCours(List<Cours> cours) {
         this.cours = cours;
+    }
+
+    public Long getId() {
+            return id;
     }
 }

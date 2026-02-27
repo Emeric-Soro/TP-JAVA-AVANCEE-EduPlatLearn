@@ -27,12 +27,27 @@ public abstract class Ressource {
     @JoinColumn(name = "lecon_id", nullable = false, unique = true)
     private Lecon lecon;
 
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = this.createdAt;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
     protected Ressource() {
     }
 
     public Ressource(String titre, Lecon lecon) {
         this.titre = titre;
         this.lecon = lecon;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getTitre() {

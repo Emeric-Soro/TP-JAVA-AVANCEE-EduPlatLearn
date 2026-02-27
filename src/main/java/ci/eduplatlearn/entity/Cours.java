@@ -135,8 +135,8 @@ public class Cours {
     public void setModules(List<Module> modules) {
         this.modules = modules;
     }
-
-    public void setEnseignant(List<Enseignant> enseignant) {
-        this.enseignants = enseignant;
+//com
+    public void setEnseignants(List<Enseignant> enseignants) {
+        this.enseignants = enseignants;
     }
 }
