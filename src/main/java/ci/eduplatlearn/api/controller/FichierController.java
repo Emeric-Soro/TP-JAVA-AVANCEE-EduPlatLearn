@@ -25,7 +25,7 @@ public class FichierController {
 
     @Operation(
             summary = "Lister les fichiers",
-            description = "Retourne la liste paginÃ©e des fichiers"
+            description = "Retourne la liste paginée des fichiers"
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Liste des fichiers"),
@@ -38,11 +38,11 @@ public class FichierController {
 
     @Operation(
             summary = "Obtenir un fichier par ID",
-            description = "Retourne les dÃ©tails d'un fichier spÃ©cifique en fonction de son ID"
+            description = "Retourne les détails d'un fichier spécifique en fonction de son ID"
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "DÃ©tails du fichier"),
-            @ApiResponse(responseCode = "404", description = "Fichier non trouvÃ©")
+            @ApiResponse(responseCode = "200", description = "Détails du fichier"),
+            @ApiResponse(responseCode = "404", description = "Fichier non trouvé")
     })
     @GetMapping("/{id}")
     public FichierResponseDTO getById(@PathVariable Long id) {
@@ -51,11 +51,11 @@ public class FichierController {
 
     @Operation(
             summary = "Obtenir les fichiers d'une leÃ§on",
-            description = "Retourne la liste des fichiers d'une leÃ§on spÃ©cifique"
+            description = "Retourne la liste des fichiers d'une leÃ§on spécifique"
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Liste des fichiers de la leÃ§on"),
-            @ApiResponse(responseCode = "404", description = "LeÃ§on non trouvÃ©e")
+            @ApiResponse(responseCode = "404", description = "LeÃ§on non trouvée")
     })
     @GetMapping("/lecon/{leconId}")
     public Page<FichierResponseDTO> getByLeconId(@PathVariable Long leconId, @ParameterObject Pageable pageable) {
@@ -63,12 +63,12 @@ public class FichierController {
     }
 
     @Operation(
-            summary = "CrÃ©er un fichier",
-            description = "Permet de crÃ©er un nouveau fichier en fournissant les informations nÃ©cessaires"
+            summary = "Créer un fichier",
+            description = "Permet de créer un nouveau fichier en fournissant les informations nécessaires"
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Fichier crÃ©Ã© avec succÃ¨s"),
-            @ApiResponse(responseCode = "400", description = "DonnÃ©es invalides")
+            @ApiResponse(responseCode = "201", description = "Fichier créé avec succÃ¨s"),
+            @ApiResponse(responseCode = "400", description = "Données invalides")
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -82,8 +82,8 @@ public class FichierController {
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Fichier mis Ã  jour avec succÃ¨s"),
-            @ApiResponse(responseCode = "400", description = "DonnÃ©es invalides"),
-            @ApiResponse(responseCode = "404", description = "Fichier non trouvÃ©")
+            @ApiResponse(responseCode = "400", description = "Données invalides"),
+            @ApiResponse(responseCode = "404", description = "Fichier non trouvé")
     })
     @PutMapping("/{id}")
     public FichierResponseDTO update(@PathVariable Long id, @Valid @RequestBody FichierUpdateRequestDTO request) {
@@ -95,8 +95,8 @@ public class FichierController {
             description = "Permet de supprimer un fichier existant en fonction de son ID"
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Fichier supprimÃ© avec succÃ¨s"),
-            @ApiResponse(responseCode = "404", description = "Fichier non trouvÃ©")
+            @ApiResponse(responseCode = "204", description = "Fichier supprimé avec succÃ¨s"),
+            @ApiResponse(responseCode = "404", description = "Fichier non trouvé")
     })
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

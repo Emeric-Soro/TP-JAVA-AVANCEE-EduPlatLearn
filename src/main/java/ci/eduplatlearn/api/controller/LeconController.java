@@ -24,12 +24,12 @@ public class LeconController {
     }
 
     @Operation(
-            summary = "Lister les leÃ§ons",
-            description = "Retourne la liste paginÃ©e des leÃ§ons"
+            summary = "Lister les leçons",
+            description = "Retourne la liste paginée des leçons"
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Liste des leÃ§ons"),
-            @ApiResponse(responseCode = "400", description = "ParamÃ¨tres invalides")
+            @ApiResponse(responseCode = "200", description = "Liste des leçons"),
+            @ApiResponse(responseCode = "400", description = "Paramètres invalides")
     })
     @GetMapping
     public Page<LeconResponseDTO> getAll(@ParameterObject Pageable pageable) {
@@ -37,12 +37,12 @@ public class LeconController {
     }
 
     @Operation(
-            summary = "Obtenir une leÃ§on par ID",
-            description = "Retourne les dÃ©tails d'une leÃ§on spÃ©cifique en fonction de son ID"
+            summary = "Obtenir une leçon par ID",
+            description = "Retourne les détails d'une leçon spécifique en fonction de son ID"
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "DÃ©tails de la leÃ§on"),
-            @ApiResponse(responseCode = "404", description = "LeÃ§on non trouvÃ©e")
+            @ApiResponse(responseCode = "200", description = "Détails de la leçon"),
+            @ApiResponse(responseCode = "404", description = "Leçon non trouvée")
     })
     @GetMapping("/{id}")
     public LeconResponseDTO getById(@PathVariable Long id) {
@@ -50,12 +50,12 @@ public class LeconController {
     }
 
     @Operation(
-            summary = "Obtenir les leÃ§ons d'un module",
-            description = "Retourne la liste des leÃ§ons d'un module spÃ©cifique"
+            summary = "Obtenir les leçons d'un module",
+            description = "Retourne la liste des leçons d'un module spécifique"
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Liste des leÃ§ons du module"),
-            @ApiResponse(responseCode = "404", description = "Module non trouvÃ©")
+            @ApiResponse(responseCode = "200", description = "Liste des leçons du module"),
+            @ApiResponse(responseCode = "404", description = "Module non trouvé")
     })
     @GetMapping("/module/{moduleId}")
     public Page<LeconResponseDTO> getByModuleId(@PathVariable Long moduleId, @ParameterObject Pageable pageable) {
@@ -63,12 +63,12 @@ public class LeconController {
     }
 
     @Operation(
-            summary = "CrÃ©er une leÃ§on",
-            description = "Permet de crÃ©er une nouvelle leÃ§on en fournissant les informations nÃ©cessaires"
+            summary = "Créer une leçon",
+            description = "Permet de créer une nouvelle leçon en fournissant les informations nécessaires"
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "LeÃ§on crÃ©Ã©e avec succÃ¨s"),
-            @ApiResponse(responseCode = "400", description = "DonnÃ©es invalides")
+            @ApiResponse(responseCode = "201", description = "Leçon créée avec succès"),
+            @ApiResponse(responseCode = "400", description = "Données invalides")
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -77,13 +77,13 @@ public class LeconController {
     }
 
     @Operation(
-            summary = "Mettre Ã  jour une leÃ§on",
-            description = "Permet de mettre Ã  jour les informations d'une leÃ§on existante en fonction de son ID"
+            summary = "Mettre à jour une leçon",
+            description = "Permet de mettre à jour les informations d'une leçon existante en fonction de son ID"
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "LeÃ§on mise Ã  jour avec succÃ¨s"),
-            @ApiResponse(responseCode = "400", description = "DonnÃ©es invalides"),
-            @ApiResponse(responseCode = "404", description = "LeÃ§on non trouvÃ©e")
+            @ApiResponse(responseCode = "200", description = "Leçon mise à jour avec succès"),
+            @ApiResponse(responseCode = "400", description = "Données invalides"),
+            @ApiResponse(responseCode = "404", description = "Leçon non trouvée")
     })
     @PutMapping("/{id}")
     public LeconResponseDTO update(@PathVariable Long id, @Valid @RequestBody LeconUpdateRequestDTO request) {
@@ -91,12 +91,12 @@ public class LeconController {
     }
 
     @Operation(
-            summary = "Supprimer une leÃ§on",
-            description = "Permet de supprimer une leÃ§on existante en fonction de son ID"
+            summary = "Supprimer une leçon",
+            description = "Permet de supprimer une leçon existante en fonction de son ID"
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "LeÃ§on supprimÃ©e avec succÃ¨s"),
-            @ApiResponse(responseCode = "404", description = "LeÃ§on non trouvÃ©e")
+            @ApiResponse(responseCode = "204", description = "Leçon supprimée avec succès"),
+            @ApiResponse(responseCode = "404", description = "Leçon non trouvée")
     })
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
