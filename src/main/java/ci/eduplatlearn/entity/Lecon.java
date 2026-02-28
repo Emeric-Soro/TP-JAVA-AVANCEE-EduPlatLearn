@@ -41,7 +41,18 @@ public class Lecon {
     @OneToOne(mappedBy = "lecon")
     private Ressource ressource;
 
-    protected Lecon() {
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = this.createdAt;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public Lecon() {
     }
 
     public Lecon(String titre, String resume, Integer ordre, Integer dureeMinutes) {
@@ -51,6 +62,9 @@ public class Lecon {
         this.dureeMinutes = dureeMinutes;
     }
 
+    public Long getId() {
+        return id;
+    }
 
     public String getTitre() {
         return titre;

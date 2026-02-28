@@ -2,6 +2,7 @@ package ci.eduplatlearn.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -24,10 +25,10 @@ public class Enseignant {
     private String bio;
 
     @Column(nullable = false, updatable = false)
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     @Column(nullable = false, updatable = false)
-    private String updatedAt;
+    private LocalDateTime updatedAt;
 
     // Relaition enseignant <--> cours (1-N) (propriétaire)
     @ManyToMany
@@ -38,13 +39,26 @@ public class Enseignant {
     )
     private java.util.List<Cours> cours = new java.util.ArrayList<>();
 
-    protected Enseignant() {
+    public Enseignant() {
     }
 
-    public Enseignant(String prenom, String nom, String email) {
+    public Enseignant(Long id, String prenom, String nom, String email, String bio) {
+        this.id = id;
         this.prenom = prenom;
         this.nom = nom;
         this.email = email;
+        this.bio = bio;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = this.createdAt;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
     }
 
     public String getNom() {
@@ -63,11 +77,11 @@ public class Enseignant {
         return bio;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public String getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
@@ -91,15 +105,19 @@ public class Enseignant {
         this.bio = bio;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
     public void setCours(List<Cours> cours) {
         this.cours = cours;
+    }
+
+    public Long getId() {
+            return id;
     }
 }
