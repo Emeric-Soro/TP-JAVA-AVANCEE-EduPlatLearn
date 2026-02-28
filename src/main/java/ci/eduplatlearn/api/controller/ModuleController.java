@@ -1,8 +1,10 @@
 package ci.eduplatlearn.api.controller;
 
+import ci.eduplatlearn.dto.lecon.LeconResponseDTO;
 import ci.eduplatlearn.dto.module.ModuleCreateRequestDTO;
 import ci.eduplatlearn.dto.module.ModuleResponseDTO;
 import ci.eduplatlearn.dto.module.ModuleUpdateRequestDTO;
+import ci.eduplatlearn.service.LeconService;
 import ci.eduplatlearn.service.ModuleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,9 +20,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/api/modules")
 public class ModuleController {
     private final ModuleService moduleService;
+    private final LeconService leconService;
 
-    public ModuleController(ModuleService moduleService) {
+    public ModuleController(ModuleService moduleService, LeconService leconService) {
         this.moduleService = moduleService;
+        this.leconService = leconService;
     }
 
     @Operation(
@@ -102,6 +106,19 @@ public class ModuleController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         moduleService.delete(id);
+    }
+
+    @Operation(
+            summary = "Lister les leçons d'un module",
+            description = "Retourne la liste paginée des leçons d'un module spécifique"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Liste des leçons du module"),
+            @ApiResponse(responseCode = "404", description = "Module non trouvé")
+    })
+    @GetMapping("/{moduleId}/lecons")
+    public Page<LeconResponseDTO> getLeconsByModule(@PathVariable Long moduleId, @ParameterObject Pageable pageable) {
+        return leconService.getByModuleId(moduleId, pageable);
     }
 }
 

@@ -7,8 +7,6 @@ import ci.eduplatlearn.dto.cours.CoursUpdateRequestDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-
 public interface CoursService {
     Page<CoursResponseDTO> getAll(Pageable pageable);
 
@@ -19,4 +17,10 @@ public interface CoursService {
     CoursResponseDTO update(Long id, CoursUpdateRequestDTO request);
 
     void delete(Long id);
+
+    CoursResponseDTO addEnseignant(Long coursId, Long enseignantId);
+
+    CoursResponseDTO removeEnseignant(Long coursId, Long enseignantId);
+
+    Page<CoursResponseDTO> getByEnseignantId(Long enseignantId, Pageable pageable);
 }

@@ -4,6 +4,8 @@ import ci.eduplatlearn.api.exception.ResourceNotFoundException;
 import ci.eduplatlearn.dto.cours.CoursCreateRequestDTO;
 import ci.eduplatlearn.dto.cours.CoursResponseDTO;
 import ci.eduplatlearn.dto.cours.CoursUpdateRequestDTO;
+import ci.eduplatlearn.entity.Enseignant;
+import ci.eduplatlearn.repository.EnseignantRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import ci.eduplatlearn.entity.Cours;
@@ -18,9 +20,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class CoursServiceImpl implements CoursService {
 
     private final CoursRepository coursRepository;
+    private final EnseignantRepository enseignantRepository;
 
-    public CoursServiceImpl(CoursRepository coursRepository) {
+    public CoursServiceImpl(CoursRepository coursRepository, EnseignantRepository enseignantRepository) {
         this.coursRepository = coursRepository;
+        this.enseignantRepository = enseignantRepository;
     }
 
     @Override
@@ -123,4 +127,46 @@ public class CoursServiceImpl implements CoursService {
         cours.setNiveau(req.niveau());
         cours.setPublie(req.publie());
     }
+
+    @Override
+    @Transactional
+    public CoursResponseDTO addEnseignant(Long coursId, Long enseignantId) {
+        Cours cours = coursRepository.findById(coursId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cours introuvable avec l'id : " + coursId));
+
+        Enseignant enseignant = enseignantRepository.findById(enseignantId)
+                .orElseThrow(() -> new ResourceNotFoundException("Enseignant introuvable avec l'id : " + enseignantId));
+
+        // Ajouter l'enseignant au cours (relation ManyToMany)
+        cours.getEnseignants().add(enseignant);
+        enseignant.getCours().add(cours);
+
+        Cours saved = coursRepository.save(cours);
+        return toResponse(saved);
+    }
+
+    @Override
+    @Transactional
+    public CoursResponseDTO removeEnseignant(Long coursId, Long enseignantId) {
+        Cours cours = coursRepository.findById(coursId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cours introuvable avec l'id : " + coursId));
+
+        Enseignant enseignant = enseignantRepository.findById(enseignantId)
+                .orElseThrow(() -> new ResourceNotFoundException("Enseignant introuvable avec l'id : " + enseignantId));
+
+        // Retirer l'enseignant du cours
+        cours.getEnseignants().remove(enseignant);
+        enseignant.getCours().remove(cours);
+
+        Cours saved = coursRepository.save(cours);
+        return toResponse(saved);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<CoursResponseDTO> getByEnseignantId(Long enseignantId, Pageable pageable) {
+        return coursRepository.findByEnseignants_Id(enseignantId, pageable)
+                .map(this::toResponse);
+    }
 }
+

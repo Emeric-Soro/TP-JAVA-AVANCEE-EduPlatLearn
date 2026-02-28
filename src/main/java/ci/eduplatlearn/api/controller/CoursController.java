@@ -4,8 +4,10 @@ import ci.eduplatlearn.dto.Enseignant.EnseignantResponseDTO;
 import ci.eduplatlearn.dto.cours.CoursCreateRequestDTO;
 import ci.eduplatlearn.dto.cours.CoursResponseDTO;
 import ci.eduplatlearn.dto.cours.CoursUpdateRequestDTO;
+import ci.eduplatlearn.dto.module.ModuleResponseDTO;
 import ci.eduplatlearn.service.CoursService;
 import ci.eduplatlearn.service.EnseignantService;
+import ci.eduplatlearn.service.ModuleService;
 import org.springframework.data.domain.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -21,10 +23,12 @@ import org.springframework.web.bind.annotation.*;
 public class CoursController {
     private final CoursService coursService;
     private final EnseignantService enseignantService;
+    private final ModuleService moduleService;
 
-    public CoursController(CoursService coursService, EnseignantService enseignantService) {
+    public CoursController(CoursService coursService, EnseignantService enseignantService, ModuleService moduleService) {
         this.coursService = coursService;
         this.enseignantService = enseignantService;
+        this.moduleService = moduleService;
     }
 
     @Operation(
@@ -106,6 +110,45 @@ public class CoursController {
     @GetMapping("/{coursId}/enseignants")
     public Page<EnseignantResponseDTO> getEnseignantsByCours(@PathVariable Long coursId, @ParameterObject Pageable pageable) {
         return enseignantService.getByCoursId(coursId, pageable);
+    }
+
+    @Operation(
+            summary = "Attribuer un enseignant à un cours",
+            description = "Permet d'ajouter un enseignant existant à un cours"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Enseignant attribué avec succès"),
+            @ApiResponse(responseCode = "404", description = "Cours ou enseignant non trouvé")
+    })
+    @PostMapping("/{coursId}/enseignants/{enseignantId}")
+    public CoursResponseDTO addEnseignant(@PathVariable Long coursId, @PathVariable Long enseignantId) {
+        return coursService.addEnseignant(coursId, enseignantId);
+    }
+
+    @Operation(
+            summary = "Retirer un enseignant d'un cours",
+            description = "Permet de retirer un enseignant d'un cours"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Enseignant retiré avec succès"),
+            @ApiResponse(responseCode = "404", description = "Cours ou enseignant non trouvé")
+    })
+    @DeleteMapping("/{coursId}/enseignants/{enseignantId}")
+    public CoursResponseDTO removeEnseignant(@PathVariable Long coursId, @PathVariable Long enseignantId) {
+        return coursService.removeEnseignant(coursId, enseignantId);
+    }
+
+    @Operation(
+            summary = "Lister les modules d'un cours",
+            description = "Retourne la liste paginée des modules d'un cours spécifique"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Liste des modules du cours"),
+            @ApiResponse(responseCode = "404", description = "Cours non trouvé")
+    })
+    @GetMapping("/{coursId}/modules")
+    public Page<ModuleResponseDTO> getModulesByCours(@PathVariable Long coursId, @ParameterObject Pageable pageable) {
+        return moduleService.getByCoursId(coursId, pageable);
     }
 
 }

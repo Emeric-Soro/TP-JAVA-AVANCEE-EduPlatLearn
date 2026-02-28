@@ -104,7 +104,7 @@ public class Cours {
         return modules;
     }
 
-    public List<Enseignant> getEnseignant() {
+    public List<Enseignant> getEnseignants() {
         return enseignants;
     }
 
