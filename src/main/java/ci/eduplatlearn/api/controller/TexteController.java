@@ -25,11 +25,11 @@ public class TexteController {
 
     @Operation(
             summary = "Lister les textes",
-            description = "Retourne la liste paginÃ©e des textes"
+            description = "Retourne la liste paginée des textes"
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Liste des textes"),
-            @ApiResponse(responseCode = "400", description = "ParamÃ¨tres invalides")
+            @ApiResponse(responseCode = "400", description = "Paramètres invalides")
     })
     @GetMapping
     public Page<TexteResponseDTO> getAll(@ParameterObject Pageable pageable) {
@@ -38,11 +38,11 @@ public class TexteController {
 
     @Operation(
             summary = "Obtenir un texte par ID",
-            description = "Retourne les dÃ©tails d'un texte spÃ©cifique en fonction de son ID"
+            description = "Retourne les détails d'un texte spécifique en fonction de son ID"
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "DÃ©tails du texte"),
-            @ApiResponse(responseCode = "404", description = "Texte non trouvÃ©")
+            @ApiResponse(responseCode = "200", description = "Détails du texte"),
+            @ApiResponse(responseCode = "404", description = "Texte non trouvé")
     })
     @GetMapping("/{id}")
     public TexteResponseDTO getById(@PathVariable Long id) {
@@ -50,12 +50,12 @@ public class TexteController {
     }
 
     @Operation(
-            summary = "Obtenir les textes d'une leÃ§on",
-            description = "Retourne la liste des textes d'une leÃ§on spÃ©cifique"
+            summary = "Obtenir les textes d'une leçon",
+            description = "Retourne la liste des textes d'une leçon spécifique"
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Liste des textes de la leÃ§on"),
-            @ApiResponse(responseCode = "404", description = "LeÃ§on non trouvÃ©e")
+            @ApiResponse(responseCode = "200", description = "Liste des textes de la leçon"),
+            @ApiResponse(responseCode = "404", description = "Leçon non trouvée")
     })
     @GetMapping("/lecon/{leconId}")
     public Page<TexteResponseDTO> getByLeconId(@PathVariable Long leconId, @ParameterObject Pageable pageable) {
@@ -63,12 +63,12 @@ public class TexteController {
     }
 
     @Operation(
-            summary = "CrÃ©er un texte",
-            description = "Permet de crÃ©er un nouveau texte en fournissant les informations nÃ©cessaires"
+            summary = "Créer un texte",
+            description = "Permet de créer un nouveau texte en fournissant les informations nécessaires"
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Texte crÃ©Ã© avec succÃ¨s"),
-            @ApiResponse(responseCode = "400", description = "DonnÃ©es invalides")
+            @ApiResponse(responseCode = "201", description = "Texte créé avec succès"),
+            @ApiResponse(responseCode = "400", description = "Données invalides")
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -77,13 +77,13 @@ public class TexteController {
     }
 
     @Operation(
-            summary = "Mettre Ã  jour un texte",
-            description = "Permet de mettre Ã  jour les informations d'un texte existant en fonction de son ID"
+            summary = "Mettre à jour un texte",
+            description = "Permet de mettre à jour les informations d'un texte existant en fonction de son ID"
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Texte mis Ã  jour avec succÃ¨s"),
-            @ApiResponse(responseCode = "400", description = "DonnÃ©es invalides"),
-            @ApiResponse(responseCode = "404", description = "Texte non trouvÃ©")
+            @ApiResponse(responseCode = "200", description = "Texte mis à jour avec succès"),
+            @ApiResponse(responseCode = "400", description = "Données invalides"),
+            @ApiResponse(responseCode = "404", description = "Texte non trouvé")
     })
     @PutMapping("/{id}")
     public TexteResponseDTO update(@PathVariable Long id, @Valid @RequestBody TexteUpdateRequestDTO request) {
@@ -95,8 +95,8 @@ public class TexteController {
             description = "Permet de supprimer un texte existant en fonction de son ID"
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Texte supprimÃ© avec succÃ¨s"),
-            @ApiResponse(responseCode = "404", description = "Texte non trouvÃ©")
+            @ApiResponse(responseCode = "204", description = "Texte supprimé avec succès"),
+            @ApiResponse(responseCode = "404", description = "Texte non trouvé")
     })
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
